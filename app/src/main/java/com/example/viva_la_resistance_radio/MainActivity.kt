@@ -1,9 +1,6 @@
 package com.example.viva_la_resistance_radio
 
 import android.media.AudioAttributes
-import android.media.MediaMetadata
-import android.media.MediaMetadata.*
-import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,14 +21,20 @@ class MainActivity : AppCompatActivity() {
         mMusic = Music()
 
         val btn = findViewById<Button>(R.id.stop_play)
+        val song = findViewById<TextView>(R.id.song_name)
 
         btn.setOnClickListener { // if playing => stop else play
             if (mMusic.mp.isPlaying) {
-                mMusic.stop()
+                mMusic.mp.stop()
+                song.text = getString(R.string.welcome)
             } else {
-                mMusic.mp.seekTo(10)
-                mMusic.play()
-                getSongName()
+                mMusic.mp.seekTo(0)
+                mMusic.prepare()
+                song.text = getString(R.string.buffering)
+                mMusic.mp.setOnPreparedListener {
+                    mMusic.mp.start()
+                    getSongName()
+                }
             }
         }
     }
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val mp = MediaPlayer()
         private val url = "https://vivalaresistance.ru/streamradio"
 
-        fun play() {
+        fun prepare() {
             mp.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -48,12 +51,7 @@ class MainActivity : AppCompatActivity() {
                     .build()
             )
             mp.setDataSource(url)
-            mp.prepare() // might take long! (for buffering, etc)
-            mp.start()
-        }
-
-        fun stop() {
-            mp.stop()
+            mp.prepareAsync() // might take long! (for buffering, etc)
         }
     }
 
@@ -65,9 +63,8 @@ class MainActivity : AppCompatActivity() {
                 val title =
                     URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=currentlyPlayingSong").readText()
                 if (title.isEmpty()) {
-                    song.text = "Stand by..."
-                } else
-                    song.post { song.text = title }
+                    song.text = getString(R.string.tech_dif)
+                } else if (mMusic.mp.isPlaying) song.post { song.text = title }
             }
         }
     }

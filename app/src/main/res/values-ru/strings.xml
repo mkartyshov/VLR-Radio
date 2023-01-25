@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Добро пожаловать на Радио Viva La Resistance</string>
+    <string name="buffering">Подключаемся…</string>
+    <string name="tech_dif">Технические неполадки</string>
+</resources>
