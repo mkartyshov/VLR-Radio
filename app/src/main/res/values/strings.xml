@@ -3,4 +3,12 @@
     <string name="welcome" translatable="true">Welcome to Viva La Resistance Radio</string>
     <string name="buffering" translatable="true">Buffering…</string>
     <string name="tech_dif" translatable="true">Technical difficulties</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">About</string>
+    <string name="player">Player</string>
+    <string name="last_songs">Last Songs</string>
+    <string name="about_us">You\'re listening to the best radio in the whole universe - Radio Viva La Resistance. We are located in Gatchina, near Saint-Petersburg. Feel free to visit our site and leave some positive (or negative) feedback.</string>
+    <string name="designed_by_mikhail_kartyshov">Designed by Mikhail Kartyshov</string>
+    <string name="list_of_songs">List of songs</string>
 </resources>
