@@ -10,8 +10,8 @@ class TabsPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> Player()
-            1 -> Info()
+            0 -> Info()
+            1 -> Player()
             2 -> LastSongs()
             else -> Player()
         }

@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Player">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <ImageButton
         android:id="@+id/stop_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/play_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:alpha="0.8"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:alpha="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,14 +32,16 @@
 
     <TextView
         android:id="@+id/song_name"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome"
         android:textAlignment="center"
+        android:textColor="@color/light_grey"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.586" />
+        app:layout_constraintVertical_bias="0.77" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,13 @@
 package com.example.viva_la_resistance_radio
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.*
@@ -46,20 +48,31 @@ class LastSongs : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val songListText: TextView = view.findViewById(R.id.lastSongs)
 
-        Timer().scheduleAtFixedRate(0, 1000) {
-            Executors.newSingleThreadExecutor().execute {
+        val swipe: SwipeRefreshLayout = view.findViewById(R.id.swipe)
 
-                val json = URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getPlaylist").readText(
-                    Charset.forName("windows-1251"))
-                songListText.post { songListText.text = json }
-            }
+        Timer().scheduleAtFixedRate(0, 120000) {
+            getSongList()
         }
 
-        /*val songListText: TextView = view.findViewById(R.id.lastSongs)
-        val songList = URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getPlaylist").readText()
-        songListText.post { songListText.text = songList }*/
+        swipe.setOnRefreshListener {
+            getSongList()
+            swipe.isRefreshing = false
+        }
+    }
+
+    private fun getSongList() {
+        val songListText: TextView = requireView().findViewById(R.id.lastSongs)
+        Executors.newSingleThreadExecutor().execute {
+            val json =
+                URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getPlaylist").readText(
+                    Charset.forName("windows-1251")
+                )
+                    .replace("и&#774;", "й")
+                    .replace("И&#774;", "Й")
+
+            songListText.post { songListText.text = json }
+        }
     }
 
     companion object {

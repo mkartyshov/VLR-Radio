@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import java.net.URL
 import java.nio.charset.Charset
@@ -51,7 +53,8 @@ class Player : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btn: Button = view.findViewById(R.id.stop_play)
+        val btn: ImageButton = view.findViewById(R.id.stop_play)
+        val loading: ProgressBar = view.findViewById(R.id.loading)
         val song: TextView = view.findViewById(R.id.song_name)
         val mp = MediaPlayer()
         val url = "https://vivalaresistance.ru/streamradio"
@@ -63,7 +66,7 @@ class Player : Fragment() {
                 Executors.newSingleThreadExecutor().execute {
                     val title =
                         URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=currentlyPlayingSong").readText(
-                            Charset.forName("windows-1251"))
+                            Charset.forName("UTF-8"))
                     if (title.isEmpty()) {
                         song.text = getString(R.string.tech_dif)
                     } else if (mp.isPlaying) song.post { song.text = title }
@@ -75,7 +78,10 @@ class Player : Fragment() {
             if (mp.isPlaying) {
                 mp.stop()
                 song.text = getString(R.string.welcome)
+                btn.setBackgroundResource(R.drawable.play_button)
             } else {
+                btn.visibility = View.GONE
+                loading.visibility = View.VISIBLE
                 mp.seekTo(0)
                 mp.setAudioAttributes(
                     AudioAttributes.Builder()
@@ -89,13 +95,12 @@ class Player : Fragment() {
                 mp.setOnPreparedListener {
                     mp.start()
                     getSongName()
+                    loading.visibility = View.GONE
+                    btn.visibility = View.VISIBLE
+                    btn.setBackgroundResource(R.drawable.stop_button)
                 }
             }
-
-
         }
-
-
     }
 
     /*class Music() {

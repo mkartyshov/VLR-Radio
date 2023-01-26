@@ -6,33 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".Info">
 
+    <ImageView
+        android:layout_width="195dp"
+        android:layout_height="195dp"
+        android:src="@drawable/info_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="201dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="196dp"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
         android:text="@string/about_us"
-        app:layout_constraintBottom_toBottomOf="@+id/schedule"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/light_grey"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.16"/>
 
     <TextView
         android:id="@+id/schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вы настроились на частоту Движения Сопротивления Плохому Настроению. \nЕжедневное расписание: \n00:00-03:00 - Chill Time \n03:00-07:00 - Lo-Fi Hip Hop \n07:00-11:00 - Утроwave \n11:00-13:00 - d+b \n13:00-21:00 - Good Music \n21:00-22:00 - Fever 105 \n22:00-23:00 - Newschool Hip Hop \n23:00-00:00 - Oldschool Hip Hop"
+        android:text="Schedule"
+        android:textColor="@color/light_grey"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/designed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/send_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/progress"
+        android:text="@string/send_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/designed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0.5"
         android:text="@string/designed_by_mikhail_kartyshov"
+        android:textColor="@color/light_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

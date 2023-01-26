@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import java.net.URL
+import java.nio.charset.Charset
+import java.util.concurrent.Executors
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +40,21 @@ class Info : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_info, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val schedule: TextView = view.findViewById(R.id.schedule)
+
+        Executors.newSingleThreadExecutor().execute {
+
+            val json =
+                URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getRadioInfo").readText(
+                    Charset.forName("UTF-8")
+                ).drop(93)
+
+            schedule.post { schedule.text = json }
+        }
     }
 
     companion object {
