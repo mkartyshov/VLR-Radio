@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import java.net.URL
@@ -45,6 +46,7 @@ class Info : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val schedule: TextView = view.findViewById(R.id.schedule)
+        val sendmsgBtn: ImageButton = view.findViewById(R.id.send_message)
 
         Executors.newSingleThreadExecutor().execute {
 
@@ -55,6 +57,11 @@ class Info : Fragment() {
 
             schedule.post { schedule.text = json }
         }
+
+        sendmsgBtn.setOnClickListener {
+
+        }
+
     }
 
     companion object {
