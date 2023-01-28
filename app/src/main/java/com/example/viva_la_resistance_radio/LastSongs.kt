@@ -1,12 +1,12 @@
 package com.example.viva_la_resistance_radio
 
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import java.net.URL
 import java.nio.charset.Charset
@@ -24,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LastSongs.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class LastSongs : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -62,17 +63,21 @@ class LastSongs : Fragment() {
     }
 
     private fun getSongList() {
-        val songListText: TextView = requireView().findViewById(R.id.lastSongs)
-        Executors.newSingleThreadExecutor().execute {
-            val json =
+        val list = view?.findViewById<ListView>(R.id.list)
+        Executors.newSingleThreadExecutor().execute() {
+            val songList =
                 URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getPlaylist").readText(
                     Charset.forName("windows-1251")
                 )
                     .replace("и&#774;", "й")
                     .replace("И&#774;", "Й")
-
-            songListText.post { songListText.text = json }
+                    .split("\n").toTypedArray()
+            val arrayAdapter =
+                ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, songList)
+            list?.adapter = arrayAdapter
         }
+
+
     }
 
     companion object {

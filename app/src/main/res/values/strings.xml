@@ -3,7 +3,6 @@
     <string name="welcome" translatable="true">Welcome to Viva La Resistance Radio</string>
     <string name="buffering" translatable="true">Buffering…</string>
     <string name="tech_dif" translatable="true">Technical difficulties</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="about" translatable="false">About</string>
     <string name="player" translatable="false">Player</string>
@@ -17,4 +16,10 @@
     <string name="name_hint">Your name</string>
     <string name="send_hint">Your message</string>
     <string name="sent">Message sent</string>
+    <string name="set_timer">Set timer</string>
+    <string name="chill">Chill</string>
+    <string name="go_back">Go back</string>
+    <string name="timer_set">Timer set to\ </string>
+    <string name="chill_time">\ minutes, time to chill</string>
+    <string name="press_to_copy">Press to copy</string>
 </resources>

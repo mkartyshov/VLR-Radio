@@ -3,14 +3,19 @@ package com.example.viva_la_resistance_radio
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.github.kittinunf.fuel.httpGet
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.concurrent.Executors
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,27 +89,27 @@ class Info : Fragment() {
         builder.setView(layout)
 
         builder.setPositiveButton(R.string.send) { _, _ ->
-            val messageSent = (name.text.toString()).plus("\n").plus(message.text.toString())
+            val name = name.text.toString()
+            val message = message.text.toString()
 
-            sendData(messageSent)
+            sendData(name, message)
 
-
-            Toast.makeText(activity, R.string.sent, Toast.LENGTH_LONG).show()
         }
+
         builder.setNegativeButton(R.string.cancel) { dialog, _ ->
             dialog.cancel()
         }
+
         builder.show()
     }
 
-    private fun sendData(messageSent: String) {
-        val url = URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=sendChannelMessage&platform=android&TEXT")
-        val postData = messageSent
+    private fun sendData(name: String, message: String) {
+        val url = "https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=sendChannelMessage&"
+        val params = mapOf("platform" to "android", "name" to name, "message" to message)
+        val sendParams = params.map { (k, v) -> "${k}=${v}" }.joinToString("&")
 
-        val connect = url.openConnection()
-        connect.doOutput = true
-
-
+        (url.plus("").plus(sendParams)).httpGet().response { _, _, _ ->
+        }
     }
 
     companion object {

@@ -9,4 +9,10 @@
     <string name="cancel">Отмена</string>
     <string name="name_hint">Ваше имя</string>
     <string name="send_hint">Ваше сообщение</string>
+    <string name="sent">Сообщение отправлено</string>
+    <string name="set_timer">Выключить через</string>
+    <string name="chill">Зачиллить</string>
+    <string name="go_back">Назад</string>
+    <string name="timer_set">Радио выключится через\ </string>
+    <string name="chill_time">\ минут, время чиллить</string>
 </resources>

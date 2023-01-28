@@ -1,22 +1,25 @@
 package com.example.viva_la_resistance_radio
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Media
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.concurrent.scheduleAtFixedRate
+import kotlin.concurrent.timerTask
+import kotlin.system.exitProcess
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,19 +48,18 @@ class Player : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_player, container, false)
     }
 
-    //private lateinit var mMusic: Music
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btn: ImageButton = view.findViewById(R.id.stop_play)
+        val play: ImageButton = view.findViewById(R.id.stop_play)
         val loading: ProgressBar = view.findViewById(R.id.loading)
         val song: TextView = view.findViewById(R.id.song_name)
         val mp = MediaPlayer()
         val url = "https://vivalaresistance.ru/streamradio"
+        val timer: ImageButton = view.findViewById(R.id.timer)
 
         fun getSongName() {
             val song: TextView = view.findViewById(R.id.song_name)
@@ -66,7 +68,8 @@ class Player : Fragment() {
                 Executors.newSingleThreadExecutor().execute {
                     val title =
                         URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=currentlyPlayingSong").readText(
-                            Charset.forName("UTF-8"))
+                            Charset.forName("UTF-8")
+                        )
                     if (title.isEmpty()) {
                         song.text = getString(R.string.tech_dif)
                     } else if (mp.isPlaying) song.post { song.text = title }
@@ -74,13 +77,13 @@ class Player : Fragment() {
             }
         }
 
-        btn.setOnClickListener {
+        play.setOnClickListener {
             if (mp.isPlaying) {
                 mp.stop()
                 song.text = getString(R.string.welcome)
-                btn.setBackgroundResource(R.drawable.play_button)
+                play.setBackgroundResource(R.drawable.play_button)
             } else {
-                btn.visibility = View.GONE
+                play.visibility = View.GONE
                 loading.visibility = View.VISIBLE
                 mp.seekTo(0)
                 mp.setAudioAttributes(
@@ -96,47 +99,50 @@ class Player : Fragment() {
                     mp.start()
                     getSongName()
                     loading.visibility = View.GONE
-                    btn.visibility = View.VISIBLE
-                    btn.setBackgroundResource(R.drawable.stop_button)
+                    play.visibility = View.VISIBLE
+                    play.setBackgroundResource(R.drawable.stop_button)
                 }
             }
+        }
+
+        timer.setOnClickListener {
+            showTimerSetDialog()
         }
     }
 
-    /*class Music() {
-        val mp = MediaPlayer()
-        private val url = "https://vivalaresistance.ru/streamradio"
+    @SuppressLint("ResourceAsColor")
+    private fun showTimerSetDialog() {
+        val times = arrayOf(
+            "5 minutes",
+            "10 minutes",
+            "15 minutes",
+            "30 minutes",
+            "45 minutes"
+        )
+        val builder = AlertDialog.Builder(activity)
+        var timer: Long = 0
 
-        fun prepare() {
-            mp.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            mp.setDataSource(url)
-            mp.prepareAsync() // might take long! (for buffering, etc)
-        }
-    }*/
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Player.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Player().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        builder.setTitle(R.string.set_timer)
+            .setSingleChoiceItems(times, -1) { dialog, item ->
+                timer = (times[item].filter { it.isDigit() }.toLong()) * 60000
             }
+            .setPositiveButton(R.string.chill) { dialog, id ->
+                Timer().schedule(timerTask {
+                    activity?.finish()
+                    exitProcess(0)
+                }, timer)
+                Toast.makeText(
+                    activity,
+                    getString(R.string.timer_set) + (timer / 60000) + getString(R.string.chill_time),
+                    Toast.LENGTH_LONG
+                ).show()
+                val btn: ImageButton? = view?.findViewById(R.id.timer)
+                btn?.setBackgroundResource(R.drawable.timer_active)
+                btn?.imageAlpha = 255
+            }
+            .setNegativeButton(R.string.go_back) { dialog, id ->
+
+            }
+            .show()
     }
 }
