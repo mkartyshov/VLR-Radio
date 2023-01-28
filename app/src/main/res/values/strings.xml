@@ -12,4 +12,9 @@
     <string name="designed_by_mikhail_kartyshov" translatable="false">Designed by Mikhail Kartyshov</string>
     <string name="list_of_songs" translatable="false">List of songs</string>
     <string name="send_message">Send Message</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="name_hint">Your name</string>
+    <string name="send_hint">Your message</string>
+    <string name="sent">Message sent</string>
 </resources>

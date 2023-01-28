@@ -1,13 +1,13 @@
 package com.example.viva_la_resistance_radio
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.concurrent.Executors
@@ -46,7 +46,7 @@ class Info : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val schedule: TextView = view.findViewById(R.id.schedule)
-        val sendmsgBtn: ImageButton = view.findViewById(R.id.send_message)
+        val sendmsgBtn: Button = view.findViewById(R.id.send_message)
 
         Executors.newSingleThreadExecutor().execute {
 
@@ -59,8 +59,51 @@ class Info : Fragment() {
         }
 
         sendmsgBtn.setOnClickListener {
-
+            showDialog()
         }
+    }
+
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle(R.string.send_message)
+
+        val name = EditText(activity)
+        name.setHint(R.string.name_hint)
+        name.inputType = InputType.TYPE_CLASS_TEXT
+
+        val message = EditText(activity)
+        message.setHint(R.string.send_hint)
+        message.inputType = InputType.TYPE_CLASS_TEXT
+
+        val layout = LinearLayout(activity)
+        layout.orientation = LinearLayout.VERTICAL
+        layout.addView(name)
+        layout.addView(message)
+        layout.setPadding(50, 50, 50, 50)
+
+        builder.setView(layout)
+
+        builder.setPositiveButton(R.string.send) { _, _ ->
+            val messageSent = (name.text.toString()).plus("\n").plus(message.text.toString())
+
+            sendData(messageSent)
+
+
+            Toast.makeText(activity, R.string.sent, Toast.LENGTH_LONG).show()
+        }
+        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
+            dialog.cancel()
+        }
+        builder.show()
+    }
+
+    private fun sendData(messageSent: String) {
+        val url = URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=sendChannelMessage&platform=android&TEXT")
+        val postData = messageSent
+
+        val connect = url.openConnection()
+        connect.doOutput = true
+
 
     }
 
