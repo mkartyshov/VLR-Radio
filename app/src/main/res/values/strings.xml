@@ -7,7 +7,7 @@
     <string name="about" translatable="false">About</string>
     <string name="player" translatable="false">Player</string>
     <string name="last_songs" translatable="false">Last Songs</string>
-    <string name="about_us">You\'re listening to the best radio in the whole universe - Radio Viva La Resistance. We are located in Gatchina, near Saint-Petersburg. Feel free to visit our site and leave some positive (or negative) feedback.</string>
+    <string name="about_us">You\'re listening to the best radio in the whole universe - Radio Viva La Resistance. We are located in Gatchina, near Saint-Petersburg. Feel free to send us a message with a feedback.</string>
     <string name="designed_by_mikhail_kartyshov" translatable="false">Designed by Mikhail Kartyshov</string>
     <string name="list_of_songs" translatable="false">List of songs</string>
     <string name="send_message">Send Message</string>
@@ -22,4 +22,7 @@
     <string name="timer_set">Timer set to\ </string>
     <string name="chill_time">\ minutes, time to chill</string>
     <string name="press_to_copy">Press to copy</string>
+    <string name="swipe_to_refresh">Swipe to refresh</string>
+    <string name="click_to_copy">Click to copy</string>
+    <string name="copied">Copied</string>
 </resources>

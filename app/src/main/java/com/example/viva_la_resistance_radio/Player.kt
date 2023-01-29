@@ -69,7 +69,7 @@ class Player : Fragment() {
                     val title =
                         URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=currentlyPlayingSong").readText(
                             Charset.forName("UTF-8")
-                        )
+                        ).replace("и&#774;", "й").replace("И&#774;", "Й")
                     if (title.isEmpty()) {
                         song.text = getString(R.string.tech_dif)
                     } else if (mp.isPlaying) song.post { song.text = title }
@@ -85,7 +85,7 @@ class Player : Fragment() {
             } else {
                 play.visibility = View.GONE
                 loading.visibility = View.VISIBLE
-                mp.seekTo(0)
+                mp.seekTo(1)
                 mp.setAudioAttributes(
                     AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -140,7 +140,7 @@ class Player : Fragment() {
                 btn?.setBackgroundResource(R.drawable.timer_active)
                 btn?.imageAlpha = 255
             }
-            .setNegativeButton(R.string.go_back) { dialog, id ->
+            .setNegativeButton(R.string.go_back) { _, _ ->
 
             }
             .show()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome">Добро пожаловать на Радио Viva La Resistance</string>
+    <string name="welcome">Радио Viva La Resistance</string>
     <string name="buffering">Подключаемся…</string>
     <string name="tech_dif">Технические неполадки</string>
-    <string name="about_us">Прямиком из подполья, радиостанция Движения Сопротивления Плохому Настроению вещает для Вас! Настройтесь на волну Viva La Resistance для борьбы со скукой! Вещание сопровождается передачей позитивных вибраций и положительных эмоций.</string>
+    <string name="about_us">Вы слушаете лучшую радиостанцию во всей вселенной — Радио Viva La Resistance. Мы находимся в Гатчине, рядом с Санкт-Петербургом. Не стесняйтесь отправлять сообщения в нашу радиорубку.</string>
     <string name="send_message">Отправить сообщение</string>
     <string name="send">Отправить</string>
     <string name="cancel">Отмена</string>
@@ -15,4 +15,8 @@
     <string name="go_back">Назад</string>
     <string name="timer_set">Радио выключится через\ </string>
     <string name="chill_time">\ минут, время чиллить</string>
+    <string name="press_to_copy">Нажми, чтобы скопировать</string>
+    <string name="swipe_to_refresh">Свайпни, чтобы обновить</string>
+    <string name="click_to_copy">Нажми, чтобы скопировать</string>
+    <string name="copied">Скопировано</string>
 </resources>
