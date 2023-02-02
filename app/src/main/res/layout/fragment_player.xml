@@ -4,41 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
     tools:context=".Player">
 
     <ImageButton
         android:id="@+id/stop_play"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:alpha="0.8"
         android:background="@drawable/play_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0.8"
         tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/timer"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:alpha="0.8"
         android:background="@drawable/timer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.95"
-        app:layout_constraintHorizontal_bias="0.9"
         tools:ignore="ContentDescription" />
 
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:alpha="0.8"
         android:indeterminate="true"
         android:visibility="invisible"
-        android:alpha="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,5 +57,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.77" />
+
+    <ImageView
+        android:id="@+id/live1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/live1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

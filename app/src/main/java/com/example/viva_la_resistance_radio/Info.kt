@@ -2,10 +2,12 @@ package com.example.viva_la_resistance_radio
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -17,28 +19,7 @@ import java.nio.charset.Charset
 import java.util.concurrent.Executors
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Info.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Info : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +33,18 @@ class Info : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val schedule: TextView = view.findViewById(R.id.schedule)
         val sendmsgBtn: Button = view.findViewById(R.id.send_message)
+        val fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
 
         Executors.newSingleThreadExecutor().execute {
-
             val json =
                 URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getRadioInfo").readText(
                     Charset.forName("UTF-8")
                 ).drop(93)
-
             schedule.post { schedule.text = json }
         }
+
+        Handler().postDelayed({schedule.startAnimation(fadeIn)
+            schedule.visibility = View.VISIBLE}, 250)
 
         sendmsgBtn.setOnClickListener {
             showDialog()
@@ -110,25 +93,5 @@ class Info : Fragment() {
 
         (url.plus("").plus(sendParams)).httpGet().response { _, _, _ ->
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Info.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Info().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

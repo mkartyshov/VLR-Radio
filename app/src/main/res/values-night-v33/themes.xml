@@ -1,5 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
     <style name="Theme.Viva_La_Resistance_Radio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
@@ -13,6 +14,8 @@
         <item name="android:statusBarColor">@color/bar</item>
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/progress</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowSplashScreenBackground">@color/bar</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/info_logo</item>
+        <item name="android:windowSplashScreenBehavior">icon_preferred</item>
     </style>
 </resources>
