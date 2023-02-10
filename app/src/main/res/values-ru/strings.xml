@@ -19,4 +19,9 @@
     <string name="swipe_to_refresh">Свайпни, чтобы обновить</string>
     <string name="click_to_copy">Нажми, чтобы скопировать</string>
     <string name="copied">Скопировано</string>
+    <string name="five_min">5 минут</string>
+    <string name="ten_min">10 минут</string>
+    <string name="fifteen_min">15 минут</string>
+    <string name="thirty_min">30 минут</string>
+    <string name="fourtyfive_min">45 минут</string>
 </resources>

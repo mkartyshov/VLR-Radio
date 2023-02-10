@@ -107,11 +107,11 @@ class Player : Fragment() {
 
     private fun showTimerSetDialog() {
         val times = arrayOf(
-            "5 minutes",
-            "10 minutes",
-            "15 minutes",
-            "30 minutes",
-            "45 minutes"
+            getString(R.string.five_min),
+            getString(R.string.ten_min),
+            getString(R.string.fifteen_min),
+            getString(R.string.thirty_min),
+            getString(R.string.fourtyfive_min)
         )
         val builder = AlertDialog.Builder(activity)
         var timer: Long = 0

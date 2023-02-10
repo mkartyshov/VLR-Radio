@@ -25,4 +25,9 @@
     <string name="swipe_to_refresh">Swipe to refresh</string>
     <string name="click_to_copy">Click to copy</string>
     <string name="copied">Copied</string>
+    <string name="five_min">5 minutes</string>
+    <string name="ten_min">10 minutes</string>
+    <string name="fifteen_min">15 minutes</string>
+    <string name="thirty_min">30 minutes</string>
+    <string name="fourtyfive_min">45 minutes</string>
 </resources>

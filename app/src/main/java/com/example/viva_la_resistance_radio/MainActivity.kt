@@ -3,11 +3,13 @@ package com.example.viva_la_resistance_radio
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -29,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         val pager = findViewById<ViewPager2>(R.id.viewPager2)
         val tl = findViewById<TabLayout>(R.id.tabLayout)
         val bg: ImageView = findViewById(R.id.bg)
-        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
 
         pager.adapter = TabsPagerAdapter(supportFragmentManager, lifecycle)
 
@@ -45,8 +46,7 @@ class MainActivity : AppCompatActivity() {
             tab.setIcon(tabLogos[position])
         }.attach()
 
-        Handler().postDelayed({bg.startAnimation(fadeIn)}, 1000)
-        Timer().scheduleAtFixedRate(1000, 300000) {
+        Timer().scheduleAtFixedRate(2000, 300000) {
             val song = SongTitle().execute().get()
             setBackground(song, bg)
         }
@@ -89,15 +89,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBackground(song: String, bg: ImageView) {
-
         if (song != "VLR - Live!") {
             runOnUiThread {
-                bg.setImageResource(R.drawable.bg)
+                setBg(bg)
             }
         } else {
             runOnUiThread {
-                bg.setImageResource(R.drawable.livebg)
+                setLiveBg(bg)
             }
+        }
+    }
+
+    private fun setLiveBg(bg: ImageView) {
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+
+        if (bg.drawable.constantState != ContextCompat.getDrawable(this, R.drawable.livebg)?.constantState) {
+            bg.startAnimation(fadeOut)
+            Handler().postDelayed({ bg.setImageResource(R.drawable.livebg)
+                                  bg.startAnimation(fadeIn)
+                                  bg.visibility = View.VISIBLE }, 250)
+        }
+    }
+
+    private fun setBg(bg: ImageView) {
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+
+        if (bg.drawable.constantState != ContextCompat.getDrawable(this, R.drawable.bg)?.constantState ) {
+            bg.startAnimation(fadeOut)
+            Handler().postDelayed({ bg.setImageResource(R.drawable.bg)
+                                  bg.startAnimation(fadeIn)
+                                  bg.visibility = View.VISIBLE }, 250)
+        }
+
+        if (bg.visibility == View.INVISIBLE) {
+            bg.startAnimation(fadeIn)
+            bg.visibility = View.VISIBLE
         }
     }
 }
