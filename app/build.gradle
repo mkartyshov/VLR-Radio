@@ -13,11 +13,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.viva_la_resistance_radio'
+    namespace 'com.mkartyshov.viva_la_resistance_radio'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.viva_la_resistance_radio"
+        applicationId "com.mkartyshov.viva_la_resistance_radio"
         minSdk 21
         targetSdk 33
         versionCode 1

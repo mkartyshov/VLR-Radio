@@ -1,4 +1,4 @@
-package com.example.viva_la_resistance_radio
+package com.mkartyshov.viva_la_resistance_radio
 
 import android.os.AsyncTask
 import android.os.Bundle

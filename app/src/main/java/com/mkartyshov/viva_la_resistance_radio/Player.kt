@@ -1,4 +1,4 @@
-package com.example.viva_la_resistance_radio
+package com.mkartyshov.viva_la_resistance_radio
 
 import android.app.AlertDialog
 import android.media.AudioAttributes
@@ -68,7 +68,7 @@ class Player : Fragment() {
             }
         }
 
-        play.setOnClickListener {
+        fun mpStartStopPlaying() {
             if (mp.isPlaying) {
                 mp.stop()
                 song.text = getString(R.string.welcome)
@@ -98,6 +98,10 @@ class Player : Fragment() {
                     getSongName()
                 }
             }
+        }
+
+        play.setOnClickListener {
+            mpStartStopPlaying()
         }
 
         timer.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.example.viva_la_resistance_radio
+package com.mkartyshov.viva_la_resistance_radio
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

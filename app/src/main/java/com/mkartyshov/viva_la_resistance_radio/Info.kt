@@ -1,4 +1,4 @@
-package com.example.viva_la_resistance_radio
+package com.mkartyshov.viva_la_resistance_radio
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.github.kittinunf.fuel.httpGet
+import com.mkartyshov.viva_la_resistance_radio.R
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.concurrent.Executors

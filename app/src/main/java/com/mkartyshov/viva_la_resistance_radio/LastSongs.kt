@@ -1,4 +1,4 @@
-package com.example.viva_la_resistance_radio
+package com.mkartyshov.viva_la_resistance_radio
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -15,6 +15,7 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.mkartyshov.viva_la_resistance_radio.R
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
