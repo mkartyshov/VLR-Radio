@@ -18,6 +18,7 @@ import kotlin.system.exitProcess
 
 class Player : Fragment() {
     private val url: String = MainActivity().stream
+    private val mp = MediaPlayer()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +33,6 @@ class Player : Fragment() {
         val play: ImageButton = view.findViewById(R.id.stop_play)
         val loading: ProgressBar = view.findViewById(R.id.loading)
         val song: TextView = view.findViewById(R.id.song_name)
-        val mp = MediaPlayer()
         val timer: ImageButton = view.findViewById(R.id.timer)
         val livePoint: ImageView = view.findViewById(R.id.live1)
         val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_repeat)
