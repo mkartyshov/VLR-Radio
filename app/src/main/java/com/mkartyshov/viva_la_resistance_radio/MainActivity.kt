@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }.attach()
 
         Timer().scheduleAtFixedRate(2000, 300000) {
-            val song = SongTitle().execute().get()
+            val song = MusicService.SongName().execute().get()
             setBackground(song, bg)
         }
     }
@@ -63,24 +63,6 @@ class MainActivity : AppCompatActivity() {
             val streamLink = BufferedReader(InputStreamReader(connect.inputStream)).readText()
             connect.disconnect()
             return streamLink
-        }
-
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
-        }
-    }
-
-    class SongTitle : AsyncTask<Void, Void, String>() {
-        override fun doInBackground(vararg params: Void?): String {
-            val url =
-                URL("https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=currentlyPlayingSong")
-            val connect = url.openConnection() as HttpURLConnection
-            connect.requestMethod = "GET"
-            connect.connect()
-
-            val title = BufferedReader(InputStreamReader(connect.inputStream, "UTF-8"))
-            connect.disconnect()
-            return title.readText().replace("и&#774;", "й").replace("И&#774;", "Й")
         }
 
         override fun onPostExecute(result: String?) {
@@ -127,6 +109,15 @@ class MainActivity : AppCompatActivity() {
             bg.startAnimation(fadeIn)
             bg.visibility = View.VISIBLE
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Player().mp.stop()
+        Player().mp.release()
+        Timer().purge()
+        Timer().cancel()
+        stopService(MusicService.newIntent(this))
     }
 }
 

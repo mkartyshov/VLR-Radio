@@ -15,7 +15,6 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.mkartyshov.viva_la_resistance_radio.R
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -49,21 +48,27 @@ class LastSongs : Fragment() {
         val fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
 
         fun updateList() {
-            val updList = GetSongListAsync().execute().get().toMutableList()
-            val oldList = listOfSongs.toMutableList()
-            val newList = updList.plus(oldList)
-                .toSet()
-                .toTypedArray()
-                .take(11)
+            Thread {
+                val updList = GetSongListAsync().execute().get().toMutableList()
+                val oldList = listOfSongs.toMutableList()
+                val newList = updList.plus(oldList)
+                    .toSet()
+                    .toTypedArray()
+                    .take(11)
 
-            if (newList.toList() != listOfSongs) {
-                listOfSongs = newList.toList()
-                activity?.runOnUiThread() {
-                    val arrayAdapter =
-                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listOfSongs)
-                    list.adapter = arrayAdapter
+                if (newList.toList() != listOfSongs) {
+                    listOfSongs = newList.toList()
+                    activity?.runOnUiThread() {
+                        val arrayAdapter =
+                            ArrayAdapter(
+                                requireContext(),
+                                android.R.layout.simple_list_item_1,
+                                listOfSongs
+                            )
+                        list.adapter = arrayAdapter
+                    }
                 }
-            }
+            }.start()
         }
 
         Timer().scheduleAtFixedRate(600000, 600000) {
