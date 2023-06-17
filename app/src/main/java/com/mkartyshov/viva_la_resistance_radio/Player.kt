@@ -18,6 +18,10 @@ import kotlin.system.exitProcess
 
 class Player : Fragment() {
     private val url: String = MainActivity().stream
+<<<<<<< Updated upstream
+=======
+    val mp = MediaPlayer()
+>>>>>>> Stashed changes
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,8 +58,8 @@ class Player : Fragment() {
         fun getSongName() {
             val song: TextView = view.findViewById(R.id.song_name)
 
-            Timer().scheduleAtFixedRate(0, 45000) {
-                val title = MainActivity.SongTitle().execute().get()
+            Timer().scheduleAtFixedRate(0, 30000) {
+                val title = MusicService.SongName().execute().get()
 
                 if (title.isEmpty()) {
                     song.text = getString(R.string.tech_dif)
@@ -70,6 +74,7 @@ class Player : Fragment() {
 
         fun mpStartStopPlaying() {
             if (mp.isPlaying) {
+                activity?.stopService(MusicService.newIntent(requireContext()))
                 mp.stop()
                 song.text = getString(R.string.welcome)
                 play.setBackgroundResource(R.drawable.play_button)
@@ -81,22 +86,25 @@ class Player : Fragment() {
                 play.visibility = View.GONE
                 loading.visibility = View.VISIBLE
                 song.text = getString(R.string.buffering)
-                mp.reset()
-                mp.setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
-                )
-                mp.setDataSource(url)
-                mp.prepareAsync()
-                mp.setOnPreparedListener {
-                    mp.start()
-                    loading.visibility = View.GONE
-                    play.visibility = View.VISIBLE
-                    play.setBackgroundResource(R.drawable.stop_button)
-                    getSongName()
-                }
+                Thread {
+                    activity?.startService(MusicService.newIntent(requireContext()))
+                    mp.reset()
+                    mp.setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build()
+                    )
+                    mp.setDataSource(url)
+                    mp.prepareAsync()
+                    mp.setOnPreparedListener {
+                        mp.start()
+                        loading.visibility = View.GONE
+                        play.visibility = View.VISIBLE
+                        play.setBackgroundResource(R.drawable.stop_button)
+                        getSongName()
+                    }
+                }.start()
             }
         }
 
@@ -127,13 +135,14 @@ class Player : Fragment() {
             .setPositiveButton(R.string.chill) { _, _ ->
                 if (timer > 60000) {
                     Timer().schedule(timerTask {
+                        activity?.stopService(MusicService.newIntent(requireContext()))
                         activity?.finish()
                         exitProcess(0)
                     }, timer)
                     Toast.makeText(
                         activity,
                         getString(R.string.timer_set) + (timer / 60000) + getString(R.string.chill_time),
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_LONG,
                     ).show()
                     val btn: ImageButton? = view?.findViewById(R.id.timer)
                     btn?.setBackgroundResource(R.drawable.timer_active)
@@ -143,5 +152,14 @@ class Player : Fragment() {
             .setNegativeButton(R.string.go_back) { _, _ ->
             }
             .show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mp.stop()
+        mp.release()
+        Timer().purge()
+        Timer().cancel()
+        activity?.finish()
     }
 }

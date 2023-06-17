@@ -8,13 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.github.kittinunf.fuel.httpGet
-import com.mkartyshov.viva_la_resistance_radio.R
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.concurrent.Executors
@@ -45,7 +41,7 @@ class Info : Fragment() {
         }
 
         Handler().postDelayed({schedule.startAnimation(fadeIn)
-            schedule.visibility = View.VISIBLE}, 250)
+            schedule.visibility = View.VISIBLE}, 1000)
 
         sendmsgBtn.setOnClickListener {
             showDialog()
@@ -94,5 +90,12 @@ class Info : Fragment() {
 
         (url.plus("").plus(sendParams)).httpGet().response { _, _, _ ->
         }
+
+        Toast.makeText(
+            activity,
+            getString(R.string.msg_sent),
+            Toast.LENGTH_LONG
+        ).show()
+
     }
 }
