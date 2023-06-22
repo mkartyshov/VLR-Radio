@@ -12,7 +12,7 @@
         android:id="@+id/bg"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
         android:scaleType="centerCrop"
         android:src="@drawable/bg"
         android:visibility="invisible"
@@ -27,16 +27,16 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#121212"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@color/progress" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
