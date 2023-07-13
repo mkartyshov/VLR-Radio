@@ -15,7 +15,6 @@
     <string name="go_back">Назад</string>
     <string name="timer_set">Радио выключится через\ </string>
     <string name="chill_time">\ минут, время чиллить</string>
-    <string name="press_to_copy">Нажми, чтобы скопировать</string>
     <string name="swipe_to_refresh">Свайпни, чтобы обновить</string>
     <string name="click_to_copy">Нажми, чтобы скопировать</string>
     <string name="copied">Скопировано</string>
@@ -24,6 +23,6 @@
     <string name="fifteen_min">15 минут</string>
     <string name="thirty_min">30 минут</string>
     <string name="fourtyfive_min">45 минут</string>
-    <string name="best_in_gtn">Лучшее в Гатчине</string>
+    <string name="best_in_gtn">Лучшая радиостанция в Гатчине</string>
     <string name="msg_sent">Сообщение отправлено</string>
 </resources>

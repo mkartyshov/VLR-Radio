@@ -42,7 +42,7 @@ class MusicService : Service() {
 
         // Create the notification and return it
         return NotificationCompat.Builder(this, "player_channel")
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(getString(R.string.app_name_long))
             .setContentText(getString(R.string.best_in_gtn))
             .setSmallIcon(R.drawable.info_logo)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

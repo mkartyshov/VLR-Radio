@@ -1,6 +1,8 @@
 package com.mkartyshov.viva_la_resistance_radio
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType
@@ -31,6 +33,7 @@ class Info : Fragment() {
         val schedule: TextView = view.findViewById(R.id.schedule)
         val sendmsgBtn: Button = view.findViewById(R.id.send_message)
         val fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+        val author: TextView = view.findViewById(R.id.designed)
 
         Executors.newSingleThreadExecutor().execute {
             val json =
@@ -45,6 +48,26 @@ class Info : Fragment() {
 
         sendmsgBtn.setOnClickListener {
             showDialog()
+        }
+
+        author.setOnLongClickListener {
+            openTelegram()
+            true
+        }
+
+        author.setOnClickListener {
+            Toast.makeText(context, "Long tap to open Telegram", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openTelegram() {
+        val id = "mkartyshov"
+        try {
+            val tgm = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$id"))
+            startActivity(tgm)
+        } catch (e: Exception) {
+            val tgmbrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.t.me/$id"))
+            startActivity(tgmbrowser)
         }
     }
 
