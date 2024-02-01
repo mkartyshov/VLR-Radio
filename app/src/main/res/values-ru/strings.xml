@@ -25,4 +25,5 @@
     <string name="fourtyfive_min">45 минут</string>
     <string name="best_in_gtn">Лучшая радиостанция в Гатчине</string>
     <string name="msg_sent">Сообщение отправлено</string>
+    <string name="fill_the_form">Вам нужно заполнить форму</string>
 </resources>

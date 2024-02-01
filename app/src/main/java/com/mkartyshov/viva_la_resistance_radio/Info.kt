@@ -1,10 +1,10 @@
 package com.mkartyshov.viva_la_resistance_radio
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.os.Handler
+import android.os.*
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +44,7 @@ class Info : Fragment() {
         }
 
         Handler().postDelayed({schedule.startAnimation(fadeIn)
-            schedule.visibility = View.VISIBLE}, 1000)
+            schedule.visibility = View.VISIBLE}, 2000)
 
         sendmsgBtn.setOnClickListener {
             showDialog()
@@ -95,8 +95,16 @@ class Info : Fragment() {
             val name = name.text.toString()
             val message = message.text.toString()
 
-            sendData(name, message)
-
+            if (message != "") {
+                sendData(name, message)
+            } else {
+                Toast.makeText(
+                    activity,
+                    R.string.fill_the_form,
+                    Toast.LENGTH_SHORT
+                ).show()
+                vibrate()
+            }
         }
 
         builder.setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -119,6 +127,21 @@ class Info : Fragment() {
             getString(R.string.msg_sent),
             Toast.LENGTH_LONG
         ).show()
+    }
 
+    private fun vibrate() {
+        if (Build.VERSION.SDK_INT >= 31) {
+            val vibratorManager =
+                context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibrator = vibratorManager.defaultVibrator
+            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
+        } else {
+            val v = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= 29) {
+                v.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
+            } else {
+                v.vibrate(100L)
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
+
 class MusicService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -38,7 +39,12 @@ class MusicService : Service() {
             action = Intent.ACTION_MAIN
         }
 
+        val stopMusicIntent = Intent("stop_music")
+        val startMusicIntent = Intent("start_music")
+
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val stopMusic: PendingIntent = PendingIntent.getBroadcast(this, 1, stopMusicIntent, PendingIntent.FLAG_IMMUTABLE)
+        val startMusic: PendingIntent = PendingIntent.getBroadcast(this, 2, startMusicIntent, PendingIntent.FLAG_IMMUTABLE)
 
         // Create the notification and return it
         return NotificationCompat.Builder(this, "player_channel")
@@ -47,6 +53,8 @@ class MusicService : Service() {
             .setSmallIcon(R.drawable.info_logo)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
+            .addAction(1, "Stop", stopMusic)
+            .addAction(2, "Play", startMusic)
             .build()
     }
 
