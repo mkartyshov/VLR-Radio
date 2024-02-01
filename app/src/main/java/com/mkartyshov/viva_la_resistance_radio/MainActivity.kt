@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         val pager = findViewById<ViewPager2>(R.id.viewPager2)
         val tl = findViewById<TabLayout>(R.id.tabLayout)
         val bg: ImageView = findViewById(R.id.bg)
-
         pager.adapter = TabsPagerAdapter(supportFragmentManager, lifecycle)
 
         val tabLogos: Array<Int> = arrayOf(
@@ -86,11 +85,17 @@ class MainActivity : AppCompatActivity() {
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 
-        if (bg.drawable.constantState != ContextCompat.getDrawable(this, R.drawable.livebg)?.constantState) {
+        if (bg.drawable.constantState != ContextCompat.getDrawable(
+                this,
+                R.drawable.livebg
+            )?.constantState
+        ) {
             bg.startAnimation(fadeOut)
-            Handler().postDelayed({ bg.setImageResource(R.drawable.livebg)
-                                  bg.startAnimation(fadeIn)
-                                  bg.visibility = View.VISIBLE }, 250)
+            Handler().postDelayed({
+                bg.setImageResource(R.drawable.livebg)
+                bg.startAnimation(fadeIn)
+                bg.visibility = View.VISIBLE
+            }, 250)
         }
     }
 
@@ -98,11 +103,17 @@ class MainActivity : AppCompatActivity() {
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 
-        if (bg.drawable.constantState != ContextCompat.getDrawable(this, R.drawable.bg)?.constantState ) {
+        if (bg.drawable.constantState != ContextCompat.getDrawable(
+                this,
+                R.drawable.bg
+            )?.constantState
+        ) {
             bg.startAnimation(fadeOut)
-            Handler().postDelayed({ bg.setImageResource(R.drawable.bg)
-                                  bg.startAnimation(fadeIn)
-                                  bg.visibility = View.VISIBLE }, 250)
+            Handler().postDelayed({
+                bg.setImageResource(R.drawable.bg)
+                bg.startAnimation(fadeIn)
+                bg.visibility = View.VISIBLE
+            }, 250)
         }
 
         if (bg.visibility == View.INVISIBLE) {

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">VLR Radio</string>
+    <string name="app_name_long" translatable="false">Viva La Resistance Radio</string>
     <string name="welcome" translatable="true">Welcome to Viva La Resistance Radio</string>
     <string name="buffering" translatable="true">Buffering…</string>
     <string name="tech_dif" translatable="true">Technical difficulties</string>
@@ -21,15 +22,15 @@
     <string name="go_back">Go back</string>
     <string name="timer_set">Timer set to\ </string>
     <string name="chill_time">\ minutes, time to chill</string>
-    <string name="press_to_copy">Press to copy</string>
     <string name="swipe_to_refresh">Swipe to refresh</string>
-    <string name="click_to_copy">Click to copy</string>
+    <string name="click_to_copy">Tap to copy</string>
     <string name="copied">Copied</string>
     <string name="five_min">5 minutes</string>
     <string name="ten_min">10 minutes</string>
     <string name="fifteen_min">15 minutes</string>
     <string name="thirty_min">30 minutes</string>
     <string name="fourtyfive_min">45 minutes</string>
-    <string name="best_in_gtn">The best in Gatchina</string>
+    <string name="best_in_gtn">The best radiostation in Gatchina</string>
     <string name="msg_sent">Message sent</string>
+    <string name="fill_the_form">You have to fill the form</string>
 </resources>

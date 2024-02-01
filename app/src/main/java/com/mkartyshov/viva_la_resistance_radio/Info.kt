@@ -1,8 +1,10 @@
 package com.mkartyshov.viva_la_resistance_radio
 
 import android.app.AlertDialog
-import android.os.Bundle
-import android.os.Handler
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.*
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +33,7 @@ class Info : Fragment() {
         val schedule: TextView = view.findViewById(R.id.schedule)
         val sendmsgBtn: Button = view.findViewById(R.id.send_message)
         val fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+        val author: TextView = view.findViewById(R.id.designed)
 
         Executors.newSingleThreadExecutor().execute {
             val json =
@@ -41,10 +44,30 @@ class Info : Fragment() {
         }
 
         Handler().postDelayed({schedule.startAnimation(fadeIn)
-            schedule.visibility = View.VISIBLE}, 1000)
+            schedule.visibility = View.VISIBLE}, 2000)
 
         sendmsgBtn.setOnClickListener {
             showDialog()
+        }
+
+        author.setOnLongClickListener {
+            openTelegram()
+            true
+        }
+
+        author.setOnClickListener {
+            Toast.makeText(context, "Long tap to open Telegram", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openTelegram() {
+        val id = "mkartyshov"
+        try {
+            val tgm = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$id"))
+            startActivity(tgm)
+        } catch (e: Exception) {
+            val tgmbrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.t.me/$id"))
+            startActivity(tgmbrowser)
         }
     }
 
@@ -72,8 +95,16 @@ class Info : Fragment() {
             val name = name.text.toString()
             val message = message.text.toString()
 
-            sendData(name, message)
-
+            if (message != "") {
+                sendData(name, message)
+            } else {
+                Toast.makeText(
+                    activity,
+                    R.string.fill_the_form,
+                    Toast.LENGTH_SHORT
+                ).show()
+                vibrate()
+            }
         }
 
         builder.setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -96,6 +127,21 @@ class Info : Fragment() {
             getString(R.string.msg_sent),
             Toast.LENGTH_LONG
         ).show()
+    }
 
+    private fun vibrate() {
+        if (Build.VERSION.SDK_INT >= 31) {
+            val vibratorManager =
+                context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibrator = vibratorManager.defaultVibrator
+            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
+        } else {
+            val v = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= 29) {
+                v.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
+            } else {
+                v.vibrate(100L)
+            }
+        }
     }
 }

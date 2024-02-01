@@ -1,14 +1,21 @@
 package com.mkartyshov.viva_la_resistance_radio
 
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import java.util.*
@@ -19,6 +26,59 @@ import kotlin.system.exitProcess
 class Player : Fragment() {
     private val url: String = MainActivity().stream
     val mp = MediaPlayer()
+    val handler = Handler()
+
+    private val playReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d("1", "Play")
+            activity?.runOnUiThread(
+                Runnable {
+                    if (!mp.isPlaying) {
+                        handler.removeCallbacksAndMessages(null)
+                        mp.reset()
+                        mp.setDataSource(url)
+                        mp.prepareAsync()
+                        mp.setOnPreparedListener {
+                            mp.start()
+                        }
+                    }
+                })
+        }
+    }
+
+    private val stopReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d("2", "Stop")
+            if (mp.isPlaying) {
+                mp.stop()
+                handler.postDelayed({
+                    if (!mp.isPlaying) {
+                        activity?.stopService(MusicService.newIntent(requireContext()))
+                    }
+                }, 120000)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val filter = IntentFilter()
+        filter.addAction("stop_music")
+        ContextCompat.registerReceiver(
+            requireContext(),
+            stopReceiver,
+            filter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
+        val filter2 = IntentFilter()
+        filter2.addAction("start_music")
+        ContextCompat.registerReceiver(
+            requireContext(),
+            playReceiver,
+            filter2,
+            ContextCompat.RECEIVER_EXPORTED
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,18 +112,18 @@ class Player : Fragment() {
         }
 
         fun getSongName() {
-            val song: TextView = view.findViewById(R.id.song_name)
-
-            Timer().scheduleAtFixedRate(0, 30000) {
+            Timer().scheduleAtFixedRate(0, 15000) {
                 val title = MusicService.SongName().execute().get()
 
-                if (title.isEmpty()) {
+                if (title.isEmpty() || title == "Radio is Off") {
                     song.text = getString(R.string.tech_dif)
                 } else if (mp.isPlaying) {
                     song.post { song.text = title }
+                    play.setBackgroundResource(R.drawable.stop_button)
                     checkForLive(title)
                 } else {
                     play.setBackgroundResource(R.drawable.play_button)
+                    song.text = getString(R.string.welcome)
                 }
             }
         }
